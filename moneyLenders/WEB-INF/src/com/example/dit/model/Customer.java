@@ -63,7 +63,7 @@ public class Customer {
 		return annualSalary;
 	}
 	
-	public void setAnnualSalar(double annualSalary) {
+	public void setAnnualSalary(double annualSalary) {
 		this.annualSalary = annualSalary;
 	}
 	
