@@ -4,10 +4,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
+import java.util.List;
 
 @XmlRootElement(name = "customer")
+
+@NamedQueries({
+	@NamedQuery(name="Customer.findAll", query="select o from Customer o"), 
+	@NamedQuery(name = "Customer.findByUsername", query = "select o from Customer o where o.name=:name")
+})
+
 @Entity
 public class Customer {
 	
@@ -20,15 +31,29 @@ public class Customer {
 	private String phoneNumber;
 	private double annualSalary;
 	
-	public Customer(String name, String address, String phoneNumber, double annualSalary) {
+	@OneToOne
+	private Loan loan;
+	
+public Customer() {
+		
+	}
+	
+	public Customer(String name, String address, String phoneNumber, double annualSalary, Loan loan) {
 		this.name = name;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 		this.annualSalary = annualSalary;
+		this.loan = loan;
 	}
 	
-	public Customer() {
-		
+	
+	@XmlElement
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	@XmlElement
@@ -65,6 +90,14 @@ public class Customer {
 	
 	public void setAnnualSalary(double annualSalary) {
 		this.annualSalary = annualSalary;
+	}
+	
+	public Loan getLoan() {
+		return loan;
+	}
+
+	public void setLoan(Loan loan) {
+		this.loan = loan;
 	}
 	
 }

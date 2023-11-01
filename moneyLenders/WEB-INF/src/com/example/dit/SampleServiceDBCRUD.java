@@ -16,27 +16,30 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import com.example.dit.model.Employee;
+import com.example.dit.model.Customer;
+
 
 
 @Path("/sampleserviceDBCRUD")
 public class SampleServiceDBCRUD {
 	
-	private static Map<String, Employee> employees = new HashMap<String, Employee>();
+	private static Map<String, Customer> customers = new HashMap<String, Customer>();
 	
 	static {
 		
-        Employee employee1 = new Employee();
-        employee1.setEmployeeId("1");
-        employee1.setEmployeeName("Fabrizio");
-        employee1.setJob("Software Engineer");
-        employees.put(employee1.getEmployeeId(), employee1);
+		Customer customer1 = new Customer();
+        customer1.setName("Kamila");
+        customer1.setAddress("45 huntstown way");
+        customer1.setPhoneNumber("0897865567");
+        customer1.setAnnualSalary(30000.30);
+        customers.put(customer1.getName(), customer1);
         
-        Employee employee2 = new Employee();
-        employee2.setEmployeeId("2");
-        employee2.setEmployeeName("Justin");
-        employee2.setJob("Business Analyst");
-        employees.put(employee2.getEmployeeId(), employee2);
+        Customer customer2 = new Customer();
+        customer2.setName("Tommy");
+        customer2.setAddress("28 Allendale Park");
+        customer2.setPhoneNumber("0863452234");
+        customer2.setAnnualSalary(45250.50);
+        customers.put(customer2.getName(), customer2);
         
     }
 
@@ -70,105 +73,105 @@ public class SampleServiceDBCRUD {
 
 	
 	@GET
-    @Path("/employees")
+    @Path("/customers")
     @Produces("application/xml")
-    public List<Employee> listEmployees(){
-        return new ArrayList<Employee>(employees.values());
+    public List<Customer> listCustomers(){
+        return new ArrayList<Customer>(customers.values());
     }
 	
 	@GET
-    @Path("/employee/{employeeid}")
+    @Path("/customer/{customername}")
     @Produces("application/xml")
-    public Employee getEmployee(@PathParam("employeeid")String employeeId){
-		return employees.get(employeeId);		
+    public Customer getCustomer(@PathParam("name")String name){
+		return customers.get(name);		
     }
 	
 	@POST
 	@Path("/createxml")
     @Consumes("application/xml")
-    public String addEmployee(Employee employee){
+    public String addCustomer(Customer customer){
 		
-		return "Employee added " +employee.getEmployeeName();		
+		return "Customer added " +customer.getName();		
     }
 	
 	@POST
 	@Path("/createjson")
     @Consumes("application/json")
-    public String addJSONEmployee(Employee employee){
-		return "Employee added " +employee.getEmployeeName();		
+    public String addJSONCustomer(Customer customer){
+		return "Customer added " +customer.getName();		
     }
 	
 	@GET
-    @Path("/json/employees/")
+    @Path("/json/customers/")
     @Produces("application/json")
-    public List<Employee> listEmployeesJSON(){
-		return new ArrayList<Employee>(employees.values());
+    public List<Customer> listCustomersJSON(){
+		return new ArrayList<Customer>(customers.values());
     }
 
 	@GET
-    @Path("/json/employee/{employeeid}")
+    @Path("/json/customer/{customername}")
     @Produces("application/json")
-    public Employee getEmployeeJSON(@PathParam("employeeid")String employeeId){
-		return employees.get(employeeId);		
+    public Customer getCustomerJSON(@PathParam("name")String name){
+		return customers.get(name);		
     }
 	
 	@GET
-    @Path("/employeesxmlfromdb")
+    @Path("/customersxmlfromdb")
     @Produces("application/xml")
-    public List<Employee> getEmployeesFromDB(){
-        EmployeeDAO dao = new EmployeeDAO();
-        return dao.getAllEmployees();
+    public List<Customer> getCustomersFromDB(){
+        CustomerDAO dao = new CustomerDAO();
+        return dao.getAllCustomers();
     }
 	
 	@GET
-    @Path("/employeesjsonfromdb")
+    @Path("/customersjsonfromdb")
     @Produces("application/json")
-    public List<Employee> getJSONEmployeesFromDB(){
-        EmployeeDAO dao = new EmployeeDAO();
-        return dao.getAllEmployees();
+    public List<Customer> getJSONCustomersFromDB(){
+        CustomerDAO dao = new CustomerDAO();
+        return dao.getAllCustomers();
     }
 	
 	@GET
-    @Path("/jsonDB/employee/{employeeName}")
+    @Path("/jsonDB/customer/{customerName}")
     @Produces("application/json")
-    public Employee getEmployeeByNameFromDBJSON(@PathParam("employeeName")String employeeName){
-		EmployeeDAO dao = new EmployeeDAO();
-		return dao.getEmployeeByName(employeeName);		
+    public Customer getCustomerByNameFromDBJSON(@PathParam("customerName")String name){
+		CustomerDAO dao = new CustomerDAO();
+		return dao.getCustomerByName(name);		
     }
 	
 	@GET
-    @Path("/employeefromDBXML/{employeeName}")
+    @Path("/customerfromDBXML/{customerNmae}")
     @Produces("application/xml")
-    public Employee getEmployeeByNameFromDBXML(@PathParam("employeeName")String employeeName){
-		EmployeeDAO dao = new EmployeeDAO();
-		return dao.getEmployeeByName(employeeName);	
+    public Customer getCustomerByNameFromDBXML(@PathParam("customerName")String name){
+		CustomerDAO dao = new CustomerDAO();
+		return dao.getCustomerByName(name);	
     }
 	
 	@POST
-	@Path("/newEmployee")
+	@Path("/newCustomer")
     @Consumes("application/json")
-    public String addEmployeeToDBJSON(Employee employee){
-		EmployeeDAO dao = new EmployeeDAO();
-		dao.persist(employee);
-		return "Employee added to DB from JSON Param "+employee.getEmployeeName();	
+    public String addCustomerToDBJSON(Customer customer){
+		CustomerDAO dao = new CustomerDAO();
+		dao.persist(customer);
+		return "Customer added to DB from JSON Param "+customer.getName();	
     }
 	
 	@PUT
-    @Path("/updateEmployee/")
+    @Path("/updateCustomer/")
     @Produces("application/json")
-    public Employee updateEmployee(Employee employee){
-		EmployeeDAO dao = new EmployeeDAO();
-		return dao.merge(employee);	
+    public Customer updateCustomer(Customer customer){
+		CustomerDAO dao = new CustomerDAO();
+		return dao.merge(customer);	
     }
 	
 	@DELETE
-    @Path("/deleteEmployee/{employeeName}")
+    @Path("/deleteCustomer/{customername}")
     @Produces("text/plain")
-    public String deleteEmployee(@PathParam("employeeName")String employeeName){
-		EmployeeDAO dao = new EmployeeDAO();
-		Employee emp = dao.getEmployeeByName(employeeName);
-		dao.removeEmployee(emp);	
-		return "Employee "+emp+" deleted";
+    public String deleteCustomer(@PathParam("customerName")String name){
+		CustomerDAO dao = new CustomerDAO();
+		Customer cus = dao.getCustomerByName(name);
+		dao.removeCustomer(cus);	
+		return "Customer "+cus+" deleted";
     }
 	
 	

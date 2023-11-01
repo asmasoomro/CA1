@@ -15,17 +15,29 @@ public class Deposit {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
+
 	private String date;
 	private double amount;
+	
+public Deposit() {
+		
+	}
 	
 	public Deposit(String date, double amount) {
 		this.date = date;
 		this.amount = amount;
 	}
 	
-	public Deposit() {
-		
+	
+	@XmlElement
+	public int getId() {
+		return id;
 	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	
 	@XmlElement
 	public String getDate() {
