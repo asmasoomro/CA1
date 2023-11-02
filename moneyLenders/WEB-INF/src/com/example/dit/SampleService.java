@@ -97,7 +97,7 @@ public class SampleService {
     }
 
 	@GET
-    @Path("/json/customer/{customername}")
+    @Path("/json/customer/{name}")
     @Produces("application/json")
     public Customer getCustomerJSON(@PathParam("name")String name){
 		return customers.get(name);		

@@ -12,7 +12,7 @@ import com.example.dit.model.Loan;
 	public class LoanDAO {
 		
 		protected static EntityManagerFactory emf = 
-		Persistence.createEntityManagerFactory("mydb");
+		Persistence.createEntityManagerFactory("jpaPU");
 
 		public LoanDAO() {
 			// TODO Auto-generated constructor stub

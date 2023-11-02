@@ -5,30 +5,30 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>REST Example</title>
+<title>CA 1</title>
 </head>
 <body>
-    <form action= "http://localhost:8080/resteasyExtended/restful-services/sampleservice/hello" method="GET">
+    <form action= "http://localhost:8080/moneyLenders/restful-services/sampleservice/hello" method="GET">
         
         
         <input type="submit" value="Hello World Test">
     </form>
 	
-	  <form action= "http://localhost:8080/resteasyExtended/restful-services/sampleservice/echo/message" method="GET">
+	  <form action= "http://localhost:8080/moneyLenders/restful-services/sampleservice/echo/message" method="GET">
         
         <input type="submit" value="Print Message ">
     </form>
 
-	<form action= "http://localhost:8080/resteasyExtended/restful-services/sampleservice/employees" method="GET">  
-        <input type="submit" value="View All Employees">
+	<form action= "http://localhost:8080/moneyLenders/restful-services/sampleservice/customers" method="GET">  
+        <input type="submit" value="View All Customers">
     </form>
 	
-	<form action= "http://localhost:8080/resteasyExtended/restful-services/sampleservice/json/employees" method="GET">  
-        <input type="submit" value="View JSON All Employee ">
+	<form action= "http://localhost:8080/moneyLenders/restful-services/sampleservice/json/customers" method="GET">  
+        <input type="submit" value="View JSON All Customer ">
     </form>
 	
-	<form action= "http://localhost:8080/resteasyExtended/restful-services/sampleservice/json/employee/1" method="GET">  
-        <input type="submit" value="View JSON Employee 1">
+	<form action= "http://localhost:8080/moneyLenders/restful-services/sampleservice/json/customer/1" method="GET">  
+        <input type="submit" value="View JSON Customer 1">
     </form>
 	
 </body>

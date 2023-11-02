@@ -17,6 +17,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import com.example.dit.model.Customer;
+import com.example.dit.model.Deposit;
 
 
 
@@ -40,6 +41,23 @@ public class SampleServiceDBCRUD {
         customer2.setPhoneNumber("0863452234");
         customer2.setAnnualSalary(45250.50);
         customers.put(customer2.getName(), customer2);
+        
+    }
+	
+	
+private static Map<String, Deposit> deposits = new HashMap<String, Deposit>();
+	
+	static {
+		
+		Deposit deposit1 = new Deposit();
+        deposit1.setDate("12/09/2022");
+        deposit1.setAmount(209);
+        deposits.put(deposit1.getDate(), deposit1);
+        
+        Deposit deposit2 = new Deposit();
+        deposit2.setDate("15/02/2020");
+        deposit2.setAmount(50.50);
+        deposits.put(deposit2.getDate(), deposit2);
         
     }
 
@@ -80,7 +98,7 @@ public class SampleServiceDBCRUD {
     }
 	
 	@GET
-    @Path("/customer/{customername}")
+    @Path("/customer/{name}")
     @Produces("application/xml")
     public Customer getCustomer(@PathParam("name")String name){
 		return customers.get(name);		
@@ -109,7 +127,7 @@ public class SampleServiceDBCRUD {
     }
 
 	@GET
-    @Path("/json/customer/{customername}")
+    @Path("/json/customer/{name}")
     @Produces("application/json")
     public Customer getCustomerJSON(@PathParam("name")String name){
 		return customers.get(name);		
@@ -132,17 +150,17 @@ public class SampleServiceDBCRUD {
     }
 	
 	@GET
-    @Path("/jsonDB/customer/{customerName}")
+    @Path("/jsonDB/customer/{name}")
     @Produces("application/json")
-    public Customer getCustomerByNameFromDBJSON(@PathParam("customerName")String name){
+    public Customer getCustomerByNameFromDBJSON(@PathParam("name")String name){
 		CustomerDAO dao = new CustomerDAO();
 		return dao.getCustomerByName(name);		
     }
 	
 	@GET
-    @Path("/customerfromDBXML/{customerNmae}")
+    @Path("/customerfromDBXML/{name}")
     @Produces("application/xml")
-    public Customer getCustomerByNameFromDBXML(@PathParam("customerName")String name){
+    public Customer getCustomerByNameFromDBXML(@PathParam("name")String name){
 		CustomerDAO dao = new CustomerDAO();
 		return dao.getCustomerByName(name);	
     }
@@ -165,13 +183,40 @@ public class SampleServiceDBCRUD {
     }
 	
 	@DELETE
-    @Path("/deleteCustomer/{customername}")
+    @Path("/deleteCustomer/{name}")
     @Produces("text/plain")
-    public String deleteCustomer(@PathParam("customerName")String name){
+    public String deleteCustomer(@PathParam("name")String name){
 		CustomerDAO dao = new CustomerDAO();
 		Customer cus = dao.getCustomerByName(name);
 		dao.removeCustomer(cus);	
 		return "Customer "+cus+" deleted";
+    }
+	
+	@POST
+	@Path("/newDeposit")
+    @Consumes("application/json")
+    public String addDepositToDBJSON(Deposit deposit){
+		DepositDAO dao = new DepositDAO();
+		dao.persist(deposit);
+		return "Deposit added to DB from JSON Param "+deposit.getAmount();	
+    }
+	
+	@PUT
+    @Path("/updateDeposit/")
+    @Produces("application/json")
+    public Deposit updateDeposit(Deposit deposit){
+		DepositDAO dao = new DepositDAO();
+		return dao.merge(deposit);	
+    }
+	
+	@DELETE
+    @Path("/deleteDeposit/{id}")
+    @Produces("text/plain")
+    public String deleteDeposit(@PathParam("id")int id){
+		DepositDAO dao = new DepositDAO();
+		Deposit dep = dao.getDepositById(id);
+		dao.removeDeposit(dep);	
+		return "Deposit "+dep+" deleted";
     }
 	
 	

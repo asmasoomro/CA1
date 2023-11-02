@@ -11,7 +11,7 @@ import com.example.dit.model.Customer;
 	public class CustomerDAO {
 		
 		protected static EntityManagerFactory emf = 
-		Persistence.createEntityManagerFactory("mydb");
+		Persistence.createEntityManagerFactory("jpaPU");
 
 		public CustomerDAO() {
 			// TODO Auto-generated constructor stub
@@ -58,7 +58,7 @@ import com.example.dit.model.Customer;
 			EntityManager em = emf.createEntityManager();
 			em.getTransaction().begin();
 			Customer c = em.createQuery("SELECT p FROM Customer p WHERE p.name = :name", Customer.class)
-	                .setParameter("Name", name)
+	                .setParameter("name", name)
 	                .getSingleResult();
 			em.getTransaction().commit();
 			em.close();

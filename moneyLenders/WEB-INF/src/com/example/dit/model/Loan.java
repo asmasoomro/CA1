@@ -78,7 +78,7 @@ public class Loan {
 		deposits.add(deposit);
 	}
 	
-	public List<Deposit> getDespoits() {
+	public List<Deposit> getDeposits() {
 		return deposits;
 	}
 
