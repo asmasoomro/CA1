@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import com.example.dit.model.Deposit;
 import com.example.dit.model.Loan;
 
 
@@ -42,6 +43,17 @@ import com.example.dit.model.Loan;
 			em.getTransaction().commit();
 			em.close();
 			return updatedLoan;
+		}
+		
+		public Loan getLoanById(int id) {
+			EntityManager em = emf.createEntityManager();
+			em.getTransaction().begin();
+			Loan l = em.createQuery("SELECT p FROM Loan p WHERE p.id = :id", Loan.class)
+	                .setParameter("id", id)
+	                .getSingleResult();
+			em.getTransaction().commit();
+			em.close();
+			return l;
 		}
 		
 		

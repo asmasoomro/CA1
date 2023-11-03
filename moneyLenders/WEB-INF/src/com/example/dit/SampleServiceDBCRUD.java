@@ -18,6 +18,7 @@ import javax.ws.rs.Produces;
 
 import com.example.dit.model.Customer;
 import com.example.dit.model.Deposit;
+import com.example.dit.model.Loan;
 
 
 
@@ -217,6 +218,33 @@ private static Map<String, Deposit> deposits = new HashMap<String, Deposit>();
 		Deposit dep = dao.getDepositById(id);
 		dao.removeDeposit(dep);	
 		return "Deposit "+dep+" deleted";
+    }
+	
+	@POST
+	@Path("/addLoan")
+    @Consumes("application/json")
+    public String addLoanToDBJSON(Loan loan){
+		LoanDAO dao = new LoanDAO();
+		dao.persist(loan);
+		return "Loan added to DB from JSON Param " + loan.getDescription() + loan.getLoanAmount();	
+    }
+	
+	@PUT
+    @Path("/updateLoan/")
+    @Produces("application/json")
+    public Loan updateLoan(Loan loan){
+		LoanDAO dao = new LoanDAO();
+		return dao.merge(loan);	
+    }
+	
+    @DELETE 
+    @Path("/deleteLoan/{id}")
+    @Produces("text/plain")
+    public String deleteLoan(@PathParam("id")int id) {
+    	LoanDAO dao = new LoanDAO();
+    	Loan lo = dao.getLoanById(id);
+    	dao.removeLoan(lo);
+    	return "Loan " +lo+ "deleted";
     }
 	
 	
